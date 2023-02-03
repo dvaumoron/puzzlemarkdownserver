@@ -18,30 +18,13 @@
 package main
 
 import (
-	"log"
-	"net"
-	"os"
-
+	grpcserver "github.com/dvaumoron/puzzlegrpcserver"
 	"github.com/dvaumoron/puzzlemarkdownserver/markdownserver"
 	pb "github.com/dvaumoron/puzzlemarkdownservice"
-	"github.com/joho/godotenv"
-	"google.golang.org/grpc"
 )
 
 func main() {
-	if godotenv.Overload() == nil {
-		log.Println("Loaded .env file")
-	}
-
-	lis, err := net.Listen("tcp", ":"+os.Getenv("SERVICE_PORT"))
-	if err != nil {
-		log.Fatal("Failed to listen :", err)
-	}
-
-	s := grpc.NewServer()
+	s := grpcserver.New()
 	pb.RegisterMarkdownServer(s, markdownserver.New())
-	log.Println("Listening at", lis.Addr())
-	if err := s.Serve(lis); err != nil {
-		log.Fatal("Failed to serve :", err)
-	}
+	s.Start()
 }
