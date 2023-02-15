@@ -111,29 +111,12 @@ func (wikiLinkParser) Parse(parent ast.Node, block text.Reader, _ parser.Context
 		seg = seg.WithStart(seg.Start + index + 1)
 	}
 
-	node := &wikiLinkNode{WikiPath: trim(wikiPath), Lang: trim(lang), Title: trim(title)}
+	node := &wikiLinkNode{
+		WikiPath: bytes.TrimSpace(wikiPath), Lang: bytes.TrimSpace(lang), Title: bytes.TrimSpace(title),
+	}
 	node.AppendChild(node, ast.NewTextSegment(seg))
 	block.Advance(stop + closeLen)
 	return node
-}
-
-func trim(data []byte) []byte {
-	start := 0
-	for index, b := range data {
-		if !(b == ' ' || b == '\t') {
-			start = index - 1
-			break
-		}
-	}
-	index := len(data) - 1
-	for {
-		b := data[index]
-		if !(b == ' ' || b == '\t') {
-			break
-		}
-		index--
-	}
-	return data[start : index+1]
 }
 
 type wikiLinkRenderer struct{}
