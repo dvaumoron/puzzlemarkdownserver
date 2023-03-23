@@ -3,7 +3,7 @@ module github.com/dvaumoron/puzzlemarkdownserver
 go 1.19
 
 require (
-	github.com/dvaumoron/puzzlegrpcserver v1.0.1
+	github.com/dvaumoron/puzzlegrpcserver v1.1.0
 	github.com/dvaumoron/puzzlemarkdownservice v1.0.1
 	github.com/yuin/goldmark v1.5.3
 )
