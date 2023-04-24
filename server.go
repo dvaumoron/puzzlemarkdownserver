@@ -24,7 +24,7 @@ import (
 )
 
 func main() {
-	s := grpcserver.New()
-	pb.RegisterMarkdownServer(s, markdownserver.New())
+	s := grpcserver.Make()
+	pb.RegisterMarkdownServer(s, markdownserver.New(s.Logger))
 	s.Start()
 }
