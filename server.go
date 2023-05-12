@@ -18,6 +18,8 @@
 package main
 
 import (
+	_ "embed"
+
 	grpcserver "github.com/dvaumoron/puzzlegrpcserver"
 	"github.com/dvaumoron/puzzlemarkdownserver/markdownserver"
 	pb "github.com/dvaumoron/puzzlemarkdownservice"
