@@ -23,8 +23,11 @@ import (
 	pb "github.com/dvaumoron/puzzlemarkdownservice"
 )
 
+//go:embed version.txt
+var version string
+
 func main() {
-	s := grpcserver.Make()
+	s := grpcserver.Make(markdownserver.MarkdownKey, version)
 	pb.RegisterMarkdownServer(s, markdownserver.New(s.Logger))
 	s.Start()
 }

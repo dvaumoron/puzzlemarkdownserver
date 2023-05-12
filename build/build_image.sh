@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-go install
+./build/build.sh
 
 buildah from --name puzzlemarkdownserver-working-container scratch
 buildah copy puzzlemarkdownserver-working-container $HOME/go/bin/puzzlemarkdownserver /bin/puzzlemarkdownserver
