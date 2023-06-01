@@ -1,6 +1,6 @@
 # puzzlemarkdownserver
 
-A simple implementation of a [puzzlemarkdownservice](https://github.com/dvaumoron/puzzlemarkdownservice) server.
+An implementation of a [puzzlemarkdownservice](https://github.com/dvaumoron/puzzlemarkdownservice) server.
 
 Use [goldmark](https://github.com/yuin/goldmark) (wich is [CommonMark](https://spec.commonmark.org) compliant) as the markdown implementation, with a custom extension for wiki link (targeting a  [WebComponent](https://www.webcomponents.org/)) :
 - "[[ pageName ]]" became \<wiki-link title="pageName">pageName\</wiki-link>
