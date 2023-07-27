@@ -34,7 +34,7 @@ const MarkdownKey = "puzzleMarkdown"
 
 var errInternal = errors.New("internal service error")
 
-// server is used to implement puzzlesaltservice.SaltServer
+// server is used to implement puzzlemarkdownservice.MarkdownServer
 type server struct {
 	pb.UnimplementedMarkdownServer
 	engine goldmark.Markdown
