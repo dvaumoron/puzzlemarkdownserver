@@ -19,16 +19,14 @@
 package markdownserver
 
 import (
-	"bytes"
 	"context"
 	"errors"
+	"strings"
 
-	"github.com/dvaumoron/puzzlemarkdownserver/wikilink"
+	markdownextension "github.com/dvaumoron/puzzlemarkdownextension"
 	pb "github.com/dvaumoron/puzzlemarkdownservice"
 	"github.com/uptrace/opentelemetry-go-extra/otelzap"
 	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/renderer/html"
 	"go.uber.org/zap"
 )
 
@@ -39,22 +37,19 @@ var errInternal = errors.New("internal service error")
 // server is used to implement puzzlesaltservice.SaltServer
 type server struct {
 	pb.UnimplementedMarkdownServer
-	md     goldmark.Markdown
+	engine goldmark.Markdown
 	logger *otelzap.Logger
 }
 
 func New(logger *otelzap.Logger) pb.MarkdownServer {
-	return server{md: goldmark.New(
-		goldmark.WithExtensions(extension.GFM, wikilink.Extension),
-		goldmark.WithRendererOptions(html.WithHardWraps()),
-	), logger: logger}
+	return server{engine: markdownextension.NewDefaultEngine(), logger: logger}
 }
 
 func (s server) Apply(ctx context.Context, request *pb.MarkdownText) (*pb.MarkdownHtml, error) {
-	var buf bytes.Buffer
-	if err := s.md.Convert([]byte(request.Text), &buf); err != nil {
+	var resBuilder strings.Builder
+	if err := s.engine.Convert([]byte(request.Text), &resBuilder); err != nil {
 		s.logger.ErrorContext(ctx, "Failed to transform markdown", zap.Error(err))
 		return nil, errInternal
 	}
-	return &pb.MarkdownHtml{Html: buf.String()}, nil
+	return &pb.MarkdownHtml{Html: resBuilder.String()}, nil
 }
