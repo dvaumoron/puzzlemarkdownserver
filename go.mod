@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/dvaumoron/puzzlegrpcserver v1.4.1
-	github.com/dvaumoron/puzzlemarkdownextension v1.8.6
+	github.com/dvaumoron/puzzlemarkdownextension v1.10.0
 	github.com/dvaumoron/puzzlemarkdownservice v1.0.1
 	github.com/uptrace/opentelemetry-go-extra/otelzap v0.2.0
 	github.com/yuin/goldmark v1.5.5
